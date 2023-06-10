@@ -11,14 +11,8 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body>
 				<nav>
-					<span>Word Snake v1</span>
+					<Link href="/" className="navName">Word Snake v1</Link>
 					<ul className="navMenu">
-						<li>
-							<Link href="/" className="navMenu__link">Home</Link>
-						</li>
-						<li>
-							<Link href="/result" className="navMenu__link">Result</Link>
-						</li>
 						<li>
 							<Link href="/about" className="navMenu__link">About</Link>
 						</li>
