@@ -9,14 +9,15 @@ const Home = () => {
 			<Image
 				src={snake}
 				alt="Drawing of a word snake"
-				width={500}
-				height={500}
+				width={750}
+				height={400}
+        className={styles.snakeImg}
 			/>
-      <p>"Give me a long word that starts with a letter that my word ends with!" - Word Snake</p>
-      <form>
-        <label>Your name: </label>
-        <input type="text" />
-        <button>Start</button>
+      <p className={styles.snakeQuote}>"Give me a long word that starts with a letter that my word ends with!" - Word Snake</p>
+      <form className={styles.form}>
+        <label className={styles.label}>Name: </label>
+        <input type="text" className={styles.input} />
+        <button className={styles.button}>Start</button>
       </form>
 		</>
 	);

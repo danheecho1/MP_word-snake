@@ -1,0 +1,42 @@
+.snakeImg {
+    margin: 3em auto;
+}
+
+.snakeQuote {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    margin: 5em auto;
+    gap: 2em;
+}
+
+.label {
+    font-size: 2.5rem;
+}
+
+.input {
+    height: 2.5rem;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-size: 2rem;
+    padding: 0 0.5em;
+    text-align: center;
+}
+
+.input:focus {
+outline: none;
+}
+
+.button {
+    border: none;
+    background-color: #3B3B3B;
+    color: white;
+    padding: 0.25em 1.5em;
+    font-size: 2rem;
+    cursor: pointer;
+}
