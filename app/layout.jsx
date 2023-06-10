@@ -12,12 +12,9 @@ export default function RootLayout({ children }) {
 			<body>
 				<nav>
 					<span>Word Snake v1</span>
-					<ul>
+					<ul className="navMenu">
 						<li>
 							<Link href="/">Home</Link>
-						</li>
-						<li>
-							<Link href="/play">Play</Link>
 						</li>
 						<li>
 							<Link href="/result">Result</Link>
