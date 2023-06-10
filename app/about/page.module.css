@@ -1,0 +1,15 @@
+.descriptionDiv {
+    text-indent: 4%;
+    line-height: 1.75;
+    font-size: 1.375rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.linkToPlay {
+    margin-top: 1.5em;
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1971C2;
+}

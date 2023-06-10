@@ -14,13 +14,13 @@ export default function RootLayout({ children }) {
 					<span>Word Snake v1</span>
 					<ul className="navMenu">
 						<li>
-							<Link href="/">Home</Link>
+							<Link href="/" className="navMenu__link">Home</Link>
 						</li>
 						<li>
-							<Link href="/result">Result</Link>
+							<Link href="/result" className="navMenu__link">Result</Link>
 						</li>
 						<li>
-							<Link href="/about">About</Link>
+							<Link href="/about" className="navMenu__link">About</Link>
 						</li>
 					</ul>
 				</nav>
