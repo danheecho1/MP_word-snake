@@ -27,9 +27,13 @@ nav {
     justify-content: space-between;
 }
 
-nav span {
+.navName {
     font-weight: 700;
     font-size: 3rem;
+}
+
+.navName:visited {
+    color: black;
 }
 
 .navMenu {
@@ -43,7 +47,7 @@ nav span {
     color: black;
 }
 
-a:hover {
+.navMenu__link:hover {
     color: darkblue;
     font-weight: 700;
 }
