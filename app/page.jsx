@@ -9,7 +9,7 @@ const Home = () => {
 			<Snake />
 			<p className={styles.snakeQuote}>
 				"Give me a long word that starts with a letter that my word ends
-				with!" - Word Snake
+				with!"<br/><br/> - Word Snake
 			</p>
 			<Link href="/play" className={styles.start}>Start</Link>
 		</>
