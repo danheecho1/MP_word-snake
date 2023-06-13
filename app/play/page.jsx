@@ -11,13 +11,16 @@ const Play = () => {
 
 	// Logics needed = Countdown timer, verify word, add to wordbank,, reset timer, end game
 
+	let numberOfLetters = wordBank[wordBank.length - 1];
+	console.log(numberOfLetters)
+
 	useEffect(() => {
 		const fetchStartingWord = async () => {
 			const response = await fetch(
 				"https://random-word-api.herokuapp.com/word"
 			);
 			const word = await response.json();
-			return word;
+			return word[0];
 		};
 
 		fetchStartingWord().then((response) => {
@@ -25,8 +28,12 @@ const Play = () => {
 				return [...current, response];
 			});
 		}).then(() => {
-			setInterval(() => {
-				setTimeLeft((timeLeft) => timeLeft - 1);
+			const interval = setInterval(() => {
+				setTimeLeft((timeLeft) => {
+					if(timeLeft === 1) {
+						clearInterval(interval)
+					}
+					return timeLeft - 1});
 			}, 1000);
 		})
 	}, []);
@@ -41,6 +48,8 @@ const Play = () => {
 		setTimeLeft(10);
 		setNewWord("");
 	}
+
+	console.log(wordBank)
 
 	return (
 		<>
