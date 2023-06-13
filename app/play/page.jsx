@@ -5,27 +5,40 @@ import styles from "./page.module.css";
 
 const Play = () => {
 	const [timeLeft, setTimeLeft] = useState(10);
-	const [newWord, setNewWord] = useState("")
-	const [wordBank, setWordBank] = useState(["game", "hello"]);
+	const [newWord, setNewWord] = useState("");
+	const [wordBank, setWordBank] = useState([]);
 	const [score, setScore] = useState(0);
-
 
 	// Logics needed = Countdown timer, verify word, add to wordbank,, reset timer, end game
 
+	useEffect(() => {
+		const fetchStartingWord = async () => {
+			const response = await fetch(
+				"https://random-word-api.herokuapp.com/word"
+			);
+			const word = await response.json();
+			return word;
+		};
 
-	// useEffect(() => {
-	// 	setInterval(() => {
-	// 		setTimeLeft((timeLeft) => timeLeft - 1);
-	// 	}, 1000);
-	// }, [])
+		fetchStartingWord().then((response) => {
+			setWordBank((current) => {
+				return [...current, response];
+			});
+		}).then(() => {
+			setInterval(() => {
+				setTimeLeft((timeLeft) => timeLeft - 1);
+			}, 1000);
+		})
+	}, []);
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log(wordBank)
+		console.log(wordBank);
 		setWordBank((currentWordBank) => {
-			return [...currentWordBank, newWord]
-		})
-		console.log(`SUBMITTED ${newWord}!!`)
+			return [...currentWordBank, newWord];
+		});
+		console.log(`SUBMITTED ${newWord}!!`);
+		setTimeLeft(10);
 		setNewWord("");
 	}
 
@@ -39,7 +52,8 @@ const Play = () => {
 				</div>
 				<div className={styles.currentWord}>
 					<p>
-						Current word: <span>{wordBank[wordBank.length-1]}</span>
+						Current word:{" "}
+						<span>{wordBank[wordBank.length - 1]}</span>
 					</p>
 				</div>
 			</div>
@@ -50,33 +64,20 @@ const Play = () => {
 			</div>
 			<form className={styles.form} onSubmit={handleSubmit}>
 				<label className={styles.label}>New word:</label>
-				<input type="text" className={styles.input} value={newWord} onChange={(e) => setNewWord(e.target.value)} />
+				<input
+					type="text"
+					className={styles.input}
+					value={newWord}
+					onChange={(e) => setNewWord(e.target.value)}
+				/>
 				<button className={styles.button}>Submit</button>
 			</form>
 			<div className={styles.wordSnakeBody}>
 				<span className={styles.snakeHead}>🐍</span>
 				<p className={styles.snakeTail}>
-					banana - ape - eggs - sponge - east - trim - man - nice -
-					ape - eggs - sponge - east - trim - man - nice - ape - eggs
-					- sponge - east - trim - man - nice - ape - eggs - sponge -
-					east - trim - man - nice - ape - eggs - sponge - east - trim
-					- man - nice - ape - eggs - sponge - east - trim - man -
-					nice - ape - eggs - sponge - east - trim - man - nice - ape
-					- eggs - sponge - east - trim - man - nice - ape - eggs -
-					sponge - east - trim - man - nice - ape - eggs - sponge -
-					east - trim - man - nice - ape - eggs - sponge - east - trim
-					- man - nice - ape - eggs - sponge - east - trim - man -
-					nice - ape - eggs - sponge - east - trim - man - nice - ape
-					- eggs - sponge - east - trim - man - nice - ape - eggs -
-					sponge - east - trim - man - nice - ape - eggs - sponge -
-					east - trim - man - nice- ape - eggs - sponge - east - trim
-					- man - nice - ape - eggs - sponge - east - trim - man -
-					nice - ape - eggs - sponge - east - trim - man - nice - ape
-					- eggs - sponge - east - trim - man - nice - ape - eggs -
-					sponge - east - trim - man - nice - ape - eggs - sponge -
-					east - trim - man - nice - ape - eggs - sponge - east - trim
-					- man - nice - ape - eggs - sponge - east - trim - man -
-					nice - ape - eggs - sponge - east - trim - man - nice ...
+					{wordBank.map((word) => {
+						return `${word} - `;
+					})}
 				</p>
 			</div>
 		</>
