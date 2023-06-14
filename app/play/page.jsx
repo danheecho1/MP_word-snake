@@ -4,16 +4,13 @@ import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
 const Play = () => {
-	const [timeLeft, setTimeLeft] = useState(10);
+	const [timeLeft, setTimeLeft] = useState(5);
 	const [newWord, setNewWord] = useState("");
 	const [wordBank, setWordBank] = useState([]);
 	const [score, setScore] = useState(0);
+	const [test, setTest] = useState("test1")
 
-	// Logics needed = Countdown timer, verify word, add to wordbank,, reset timer, end game
-
-	let numberOfLetters = wordBank[wordBank.length - 1];
-	console.log(numberOfLetters)
-
+	// Logics needed = Countdown timer, verify word, end game
 	useEffect(() => {
 		const fetchStartingWord = async () => {
 			const response = await fetch(
@@ -38,18 +35,27 @@ const Play = () => {
 		})
 	}, []);
 
+	function calculateScore(currentWord, remainingSeconds) {
+		return currentWord.length * remainingSeconds
+	}
+
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log(wordBank);
+
+		// Add submitted word to the word bank
 		setWordBank((currentWordBank) => {
 			return [...currentWordBank, newWord];
 		});
-		console.log(`SUBMITTED ${newWord}!!`);
-		setTimeLeft(10);
-		setNewWord("");
-	}
 
-	console.log(wordBank)
+		// Reset the timer back to 10 seconds
+		setTimeLeft(5);
+		setNewWord("");
+
+		// Calculate and update the score
+		setScore((currentScore) => {
+			return currentScore + (calculateScore(newWord, timeLeft))
+		})
+	}
 
 	return (
 		<>
