@@ -30,7 +30,7 @@ const About = () => {
 					provided multiplied by the total number of words provided.
 				</p>
 			</div>
-			<Link href="/" className={styles.linkToPlay}>
+			<Link href="/play" className={styles.linkToPlay}>
 				Click here if your brain is ready to play
 			</Link>
 		</>
