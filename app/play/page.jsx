@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import styles from "./page.module.css";
 
 const Play = () => {
@@ -8,7 +9,7 @@ const Play = () => {
 	const [newWord, setNewWord] = useState("");
 	const [wordBank, setWordBank] = useState([]);
 	const [score, setScore] = useState(0);
-	const [test, setTest] = useState("test1")
+	const router =  useRouter()
 
 	// Logics needed = Countdown timer, verify word, end game
 	useEffect(() => {
@@ -33,7 +34,12 @@ const Play = () => {
 					return timeLeft - 1});
 			}, 1000);
 		})
+
 	}, []);
+	
+	if(timeLeft === 0) {
+		router.push("/result")
+	}
 
 	function calculateScore(currentWord, remainingSeconds) {
 		return currentWord.length * remainingSeconds
