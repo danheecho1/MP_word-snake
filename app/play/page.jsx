@@ -11,9 +11,11 @@ const Play = () => {
 	const [score, setScore] = useState(0);
 	const router = useRouter();
 
-	// Logics needed = Countdown timer, verify word, end game
+	// This code block should run only once at initial render
 	useEffect(() => {
+		// When game starts, clear session data from previous game
 		sessionStorage.clear();
+		// Set up an api call to receive a random starting word
 		const fetchStartingWord = async () => {
 			const response = await fetch(
 				"https://random-word-api.herokuapp.com/word"
@@ -21,6 +23,7 @@ const Play = () => {
 			const word = await response.json();
 			return word[0];
 		};
+		// Call random word api, set the response as the first word in the wordBank, and start the timer
 		fetchStartingWord()
 			.then((response) => {
 				setWordBank((current) => {
@@ -39,51 +42,61 @@ const Play = () => {
 			});
 	}, []);
 
+	// End game when time runs out - save score and number of words submitted.
 	if (timeLeft === 0) {
 		sessionStorage.setItem("score", score);
 		sessionStorage.setItem("numberOfWords", wordBank.length - 1);
+		alert("You took too long!");
 		router.push("/result");
-		alert("You took too long!")
 	}
 
+	// This is how score is calculated for each valid word submitted: length of the word times remaining time in seconds
 	function calculateScore(currentWord, remainingSeconds) {
 		return currentWord.length * remainingSeconds;
 	}
 
+	// This is where the logic for validating word submissions is
 	async function validateWord(word) {
-		// Making sure the new word submitted starts with the letter that the previous word ended with
-		const lastWord = wordBank[wordBank.length - 1]
-		if(word[0] === lastWord[lastWord.length - 1]) {
-			// Checking that the word does exist in dictionary
-			const fetchWord = async (word) => {
-				const response = await fetch(
-					`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-				);
-				const result = await response.json();
-				return result[0];
-			};
-			try {
-				const response = await fetchWord(word);
-				if(response === undefined) {
-					return false;
-				} else {
-					return true;
+		// First, make sure the new word submitted starts with the letter that the previous word ended with
+		const lastWord = wordBank[wordBank.length - 1];
+		if (word[0] === lastWord[lastWord.length - 1]) {
+			// Second, make sure the word has not been already submitted
+			if (!wordBank.includes(word)) {
+				// Lastly, make sure that the word does exist in the dictionary api
+				const fetchWord = async (word) => {
+					const response = await fetch(
+						`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+					);
+					const result = await response.json();
+					return result[0];
+				};
+				try {
+					const response = await fetchWord(word);
+					if (response !== undefined) {
+						return true;
+					} else {
+						alert("The word you submitted doesn't exist!");
+						return false;
+					}
+				} catch (error) {
+					console.error(error);
 				}
-			} catch (error) {
-				console.error(error);
+			} else {
+				alert("You already submitted that word!");
 				return false;
 			}
 		} else {
-			sessionStorage.setItem("score", score);
-			sessionStorage.setItem("numberOfWords", wordBank.length - 1);
-			router.push("/result");
-			alert("You submitted a word(?) that doesn't start with the letter that the previous word ended with!")
+			alert("Your word does not start with the correct letter!");
+			return false;
 		}
 	}
 
+	// What happens when a user submits a word?
 	async function handleSubmit(e) {
+		// Do not reload the page
 		e.preventDefault();
-		const isValid = await validateWord(newWord)
+		// If the submitted word passes validation process...
+		const isValid = await validateWord(newWord);
 		if (isValid) {
 			// Add submitted word to the word bank
 			setWordBank((currentWordBank) => {
@@ -91,16 +104,18 @@ const Play = () => {
 			});
 			// Reset the timer back to 10 seconds
 			setTimeLeft(5);
+			// Clear the text input field for new submission
 			setNewWord("");
 			// Calculate and update the score
 			setScore((currentScore) => {
 				return currentScore + calculateScore(newWord, timeLeft);
 			});
-		} else {
+		} 
+		// If the submitted word does not pass validation process, save the final score and the number of words submitted, and move on to the result page
+		else {
 			sessionStorage.setItem("score", score);
 			sessionStorage.setItem("numberOfWords", wordBank.length - 1);
 			router.push("/result");
-			alert("The word you submitted doesn't exist!")
 		}
 	}
 
