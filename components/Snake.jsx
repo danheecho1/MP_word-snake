@@ -1,5 +1,5 @@
 import Image from "next/image";
-import snake from "../public/snake.png";
+import snake from "/public/snake.png";
 import styles from "./styles.module.css"
 import React from "react";
 
