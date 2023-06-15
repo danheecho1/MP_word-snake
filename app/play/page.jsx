@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 const Play = () => {
+	console.log(`this is in the session: ${sessionStorage}`);
 	const [timeLeft, setTimeLeft] = useState(5);
 	const [newWord, setNewWord] = useState("");
 	const [wordBank, setWordBank] = useState([]);
 	const [score, setScore] = useState(0);
-	const router =  useRouter()
+	const router = useRouter();
 
 	// Logics needed = Countdown timer, verify word, end game
 	useEffect(() => {
+		sessionStorage.clear();
 		const fetchStartingWord = async () => {
 			const response = await fetch(
 				"https://random-word-api.herokuapp.com/word"
@@ -20,47 +22,47 @@ const Play = () => {
 			const word = await response.json();
 			return word[0];
 		};
-
-		fetchStartingWord().then((response) => {
-			setWordBank((current) => {
-				return [...current, response];
+		fetchStartingWord()
+			.then((response) => {
+				setWordBank((current) => {
+					return [...current, response];
+				});
+			})
+			.then(() => {
+				const interval = setInterval(() => {
+					setTimeLeft((timeLeft) => {
+						if (timeLeft === 1) {
+							clearInterval(interval);
+						}
+						return timeLeft - 1;
+					});
+				}, 1000);
 			});
-		}).then(() => {
-			const interval = setInterval(() => {
-				setTimeLeft((timeLeft) => {
-					if(timeLeft === 1) {
-						clearInterval(interval)
-					}
-					return timeLeft - 1});
-			}, 1000);
-		})
-
 	}, []);
-	
-	if(timeLeft === 0) {
-		router.push("/result")
+
+	if (timeLeft === 0) {
+		sessionStorage.setItem("score", score);
+		sessionStorage.setItem("numberOfWords", wordBank.length - 1);
+		router.push("/result");
 	}
 
 	function calculateScore(currentWord, remainingSeconds) {
-		return currentWord.length * remainingSeconds
+		return currentWord.length * remainingSeconds;
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-
 		// Add submitted word to the word bank
 		setWordBank((currentWordBank) => {
 			return [...currentWordBank, newWord];
 		});
-
 		// Reset the timer back to 10 seconds
 		setTimeLeft(5);
 		setNewWord("");
-
 		// Calculate and update the score
 		setScore((currentScore) => {
-			return currentScore + (calculateScore(newWord, timeLeft))
-		})
+			return currentScore + calculateScore(newWord, timeLeft);
+		});
 	}
 
 	return (
