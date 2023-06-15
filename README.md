@@ -1,40 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Word Snake v1
 
-## Getting Started
+## About the game
 
-First, run the development server:
+Word Snake is an English version of 끝말잇기 (direct translation would be something along the lines of 'connecting the last word'). Your goal is to continue submitting a word that starts with a letter that the previous word ended with. For example, if the previous word was 'apple', then you can submit 'elephant' as the next word since 'apple' ended with an 'e', and 'elephant' starts with the same letter. Then, you submit a word that starts with a 't', and so on. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+For your word to be valid and count towards your score, 1) it has to be a real word EXCLUDING pronouns, 2) it has to start with the letter that the previous word ended with, and 3) it must not have been submitted already. Plural versions of nouns (i.e. window and windows), different parts of the speech using the same root word (i.e. quick and quickly, run and running, or exhibit and exhibition), and different tenses of verbs (i.e. grow, grew, grown) are acceptable and will add up to the total score separately. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Game will start as soon as the first word is loaded, and the timer will start at 5 seconds. Each valid word submission will reset the timer back to 5 seconds. No submission within the 5 seconds will also end the game. 
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Each valid word submission will add (remaining seconds * number of letters in the word) to the total score. 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Build with
 
-## Learn More
+- React with JavaScript
+- Next.js 13
 
-To learn more about Next.js, take a look at the following resources:
+## APIs used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- http://random-word-api.herokuapp.com/home to receive a random word at the beginning of the game
+- https://dictionaryapi.dev/ to verify that the words submitted are real words
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## What I learned/felt
 
-## Deploy on Vercel
+- When updating states in React, providing a callback function to setState is probably better (i.e. setState(() => {}) vs. setState([])) in most cases. 
+  - https://stackoverflow.com/questions/64361342/what-difference-between-direct-argument-and-callback-in-setstate
+  - https://legacy.reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous
+- Next.js 13's app router is very intuitive to use!
+- For importing from components folder, I can simply create one index.jsx file that imports and exports all other components. From pages or layouts, I can then pick and choose what I want to import in a single line as below: 
+  
+  ```
+  import { Component1, Component2 } from "@/components";
+  ```
+- Maybe BEM isn't so necessary when using Next.js' app router.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Future development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-
-# APIs used
-
-- http://random-word-api.herokuapp.com/home
-- https://dictionaryapi.dev/
+- I want to try using a database (most likely MySQL). When I planned for this project, I wanted to create a leaderboard as well. 
+- I started wondering if I could modularize my codes. 
+- How can I add a dark mode feature? Maybe for the next project. 
