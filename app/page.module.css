@@ -4,12 +4,10 @@
 }
 
 .start {
-    border: none;
     background-color: #3B3B3B;
     color: white;
     padding: 0.25em 1.5em;
     font-size: 2rem;
-    cursor: pointer;
     width: fit-content;
     margin: 1.5em auto;
 }

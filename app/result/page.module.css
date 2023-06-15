@@ -1,0 +1,38 @@
+.heading {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.resultsDiv {
+    font-size: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 2em 3em;
+}
+
+.resultsDiv__detailsDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.resultsDiv__detailsDiv__totalScore {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.playAgain {
+    text-align: center;
+    height: fit-content;
+    vertical-align: bottom;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-end;
+    background-color: #3B3B3B;
+    color: white;
+    padding: 0.25em 1.5em;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 2rem;
+}
