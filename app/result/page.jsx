@@ -14,11 +14,11 @@ const Result = () => {
 				<div className={styles.resultsDiv__detailsDiv}>
 					<p className={styles.resultsDiv__detailsDiv__totalWords}>
 						Total # of words:{" "}
-						<span>{sessionStorage.getItem("numberOfWords")}</span>
+						<span>{typeof window !== 'undefined' ? sessionStorage.getItem("numberOfWords") : null}</span>
 					</p>
 					<p className={styles.resultsDiv__detailsDiv__totalScore}>
 						Total score:{" "}
-						<span>{sessionStorage.getItem("score")}</span>
+						<span>{typeof window !== 'undefined' ? sessionStorage.getItem("score") : null}</span>
 					</p>
 				</div>
 				<Link href="/play" className={styles.playAgain}>
