@@ -1,10 +1,10 @@
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "./styles.module.css"
 import React from "react";
 
 const Snake = () => {
 	return (
-		<Image
+		<img
 			src='/snake.png'
 			alt="Drawing of a word snake"
 			width={750}
