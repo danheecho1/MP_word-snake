@@ -5,7 +5,7 @@ import React from "react";
 const Snake = () => {
 	return (
 		<Image
-			src='/public/snake.png'
+			src='/snake.png'
 			alt="Drawing of a word snake"
 			width={750}
 			height={400}
