@@ -33,7 +33,7 @@ const Play = () => {
 			.then(() => {
 				const interval = setInterval(() => {
 					setTimeLeft((timeLeft) => {
-						if (timeLeft === 1) {
+						if (timeLeft === 0) {
 							clearInterval(interval);
 						}
 						return timeLeft - 1;

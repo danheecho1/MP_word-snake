@@ -30,9 +30,6 @@ nav {
 .navName {
     font-weight: 700;
     font-size: 3rem;
-}
-
-.navName:visited {
     color: black;
 }
 
@@ -43,7 +40,7 @@ nav {
     gap: 2em;
 }
 
-.navMenu__link:visited {
+.navMenu__link {
     color: black;
 }
 

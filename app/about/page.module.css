@@ -6,6 +6,11 @@
     flex-direction: column;
 }
 
+.description a {
+    font-weight: 700;
+    color: #1971C2;
+}
+
 .linkToPlay {
     margin-top: 1.5em;
     font-size: 3rem;
@@ -14,6 +19,7 @@
     color: #1971C2;
 }
 
+.description a:hover, 
 .linkToPlay:hover {
     color: purple;
 }
